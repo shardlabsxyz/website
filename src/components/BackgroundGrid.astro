@@ -1,0 +1,18 @@
+<div class="background-grid" aria-hidden="true"></div>
+
+<style>
+  .background-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    opacity: var(--brand-grid-opacity);
+    background-image:
+      linear-gradient(rgba(242, 240, 235, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242, 240, 235, 0.08) 1px, transparent 1px),
+      linear-gradient(115deg, transparent 0 48%, rgba(242, 240, 235, 0.08) 49%, transparent 50% 100%);
+    background-position: center top;
+    background-size: 88px 88px, 88px 88px, 360px 360px;
+    mask-image: linear-gradient(to bottom, black, black 58%, transparent);
+  }
+</style>

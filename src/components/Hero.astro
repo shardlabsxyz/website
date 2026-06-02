@@ -1,0 +1,122 @@
+---
+interface Props {
+  eyebrow?: string;
+  headline: string;
+  copy: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+}
+
+const { eyebrow, headline, copy, primaryLabel, primaryHref, secondaryLabel, secondaryHref } = Astro.props;
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-kicker" aria-hidden={!eyebrow}>{eyebrow}</div>
+  <h1 id="hero-title">{headline}</h1>
+  <p>{copy}</p>
+  <div class="hero-actions">
+    <a class="button primary" href={primaryHref}>{primaryLabel}</a>
+    <a class="button secondary" href={secondaryHref}>{secondaryLabel}</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    width: min(var(--max-page), calc(100% - (var(--space-page) * 2)));
+    margin: 0 auto;
+    padding: clamp(6rem, 13vw, 11rem) 0 clamp(4.5rem, 9vw, 8rem);
+  }
+
+  .hero-kicker {
+    min-height: 1.4rem;
+    margin-bottom: 1.35rem;
+    color: var(--brand-accent-2);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0;
+    text-transform: lowercase;
+  }
+
+  .hero-kicker:empty {
+    visibility: hidden;
+  }
+
+  h1 {
+    max-width: 13ch;
+    margin: 0;
+    font-size: clamp(3.35rem, 9.8vw, 8.8rem);
+    font-weight: 520;
+    line-height: 0.92;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    max-width: 40rem;
+    margin: 1.7rem 0 0;
+    color: var(--color-muted);
+    font-size: clamp(1.05rem, 1.6vw, 1.36rem);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2.2rem;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.9rem;
+    padding: 0.78rem 1.08rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    transition:
+      background-color var(--motion-fast) var(--ease-standard),
+      border-color var(--motion-fast) var(--ease-standard),
+      color var(--motion-fast) var(--ease-standard),
+      transform var(--motion-fast) var(--ease-standard);
+  }
+
+  .button:hover {
+    transform: translateY(-1px);
+  }
+
+  .primary {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .primary:hover {
+    background: var(--brand-accent);
+  }
+
+  .secondary {
+    color: var(--color-text);
+  }
+
+  .secondary:hover {
+    border-color: var(--color-text);
+    background: rgba(242, 240, 235, 0.05);
+  }
+
+  @media (max-width: 560px) {
+    h1 {
+      font-size: clamp(3rem, 17vw, 4.6rem);
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+</style>

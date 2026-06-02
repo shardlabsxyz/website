@@ -1,0 +1,130 @@
+---
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  logoPath?: string | null;
+  brandName: string;
+  nav: NavItem[];
+  contactHref: string;
+}
+
+const { logoPath, brandName, nav, contactHref } = Astro.props;
+---
+
+<header class="site-header">
+  <a class="brand-link" href="#top" aria-label={`${brandName} home`}>
+    {logoPath ? <img class="brand-logo" src={logoPath} alt="" width="132" height="28" /> : <span class="brand-fallback">{brandName}</span>}
+  </a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+  <a class="contact-link" href={contactHref}>contact</a>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    width: min(var(--max-page), calc(100% - (var(--space-page) * 2)));
+    margin: 0 auto;
+    padding: 1.05rem clamp(0.85rem, 2vw, 1.35rem);
+    border-bottom: 1px solid var(--color-line);
+    backdrop-filter: blur(18px);
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: 2.25rem;
+    font-size: 1.06rem;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .brand-logo {
+    display: block;
+    width: auto;
+    max-width: 10.25rem;
+    height: 2rem;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+  }
+
+  .brand-fallback {
+    text-transform: lowercase;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+    letter-spacing: 0;
+    text-transform: lowercase;
+  }
+
+  .site-nav a,
+  .contact-link {
+    position: relative;
+    padding: 0.45rem 0;
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+
+  .site-nav a::after,
+  .contact-link::after {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0.15rem;
+    height: 1px;
+    content: "";
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--motion-medium) var(--ease-standard);
+  }
+
+  .site-nav a:hover,
+  .contact-link:hover {
+    color: var(--color-text);
+  }
+
+  .site-nav a:hover::after,
+  .contact-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .contact-link {
+    justify-self: end;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+    letter-spacing: 0;
+    text-transform: lowercase;
+  }
+
+  @media (max-width: 720px) {
+    .site-header {
+      grid-template-columns: 1fr auto;
+      row-gap: 0.65rem;
+    }
+
+    .site-nav {
+      grid-column: 1 / -1;
+      justify-content: start;
+      overflow-x: auto;
+      padding-block-end: 0.15rem;
+    }
+  }
+</style>

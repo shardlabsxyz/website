@@ -1,0 +1,85 @@
+---
+interface Props {
+  variant?: "calm" | "kinetic";
+}
+
+const { variant = "calm" } = Astro.props;
+---
+
+<figure class:list={["shard-motif", variant]} aria-hidden="true">
+  <svg viewBox="0 0 420 420" role="presentation">
+    <path class="plane plane-a" d="M46 248 176 54l32 160Z" />
+    <path class="plane plane-b" d="m204 216 126-92-46 220Z" />
+    <path class="plane plane-c" d="m96 318 104-96 88 114Z" />
+    <path class="line" d="M176 54 204 216 330 124M204 216 96 318M208 214l80 122" />
+  </svg>
+</figure>
+
+<style>
+  .shard-motif {
+    position: absolute;
+    inset-block-start: clamp(5rem, 12vw, 9rem);
+    inset-inline-end: max(1rem, calc((100vw - var(--max-page)) / 2));
+    z-index: -1;
+    width: min(46vw, 31rem);
+    min-width: 16rem;
+    opacity: var(--brand-motif-opacity);
+    filter: drop-shadow(var(--glow-subtle));
+  }
+
+  .shard-motif svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    animation: motif-drift var(--brand-motif-speed) var(--ease-standard) infinite alternate;
+  }
+
+  .plane {
+    fill: rgba(242, 240, 235, 0.04);
+    stroke: rgba(242, 240, 235, 0.22);
+    stroke-width: 1;
+  }
+
+  .plane-b {
+    fill: rgba(158, 183, 176, 0.08);
+  }
+
+  .line {
+    fill: none;
+    stroke: rgba(242, 240, 235, 0.32);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .kinetic .plane-b {
+    transform-origin: 210px 210px;
+    animation: edge-shift 9s var(--ease-standard) infinite alternate;
+  }
+
+  @keyframes motif-drift {
+    from {
+      transform: translate3d(0, 0, 0) rotate(-1deg);
+    }
+    to {
+      transform: translate3d(-10px, 8px, 0) rotate(1deg);
+    }
+  }
+
+  @keyframes edge-shift {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(9px, -13px);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .shard-motif {
+      inset-block-start: 7rem;
+      inset-inline-end: -7rem;
+      width: 21rem;
+      opacity: 0.14;
+    }
+  }
+</style>

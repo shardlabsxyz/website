@@ -1,0 +1,93 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  index: number;
+  href?: string;
+}
+
+const { title, description, index, href } = Astro.props;
+const number = String(index + 1).padStart(2, "0");
+---
+
+{
+  href ? (
+    <a class="capability-card" href={href}>
+      <span>{number}</span>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </a>
+  ) : (
+    <article class="capability-card">
+      <span>{number}</span>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </article>
+  )
+}
+
+<style>
+  .capability-card {
+    position: relative;
+    display: block;
+    min-height: 16rem;
+    padding: 1.25rem;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(135deg, rgba(242, 240, 235, 0.055), transparent 42%),
+      rgba(242, 240, 235, 0.018);
+    transition:
+      border-color var(--motion-medium) var(--ease-standard),
+      background-color var(--motion-medium) var(--ease-standard),
+      transform var(--motion-medium) var(--ease-standard);
+  }
+
+  .capability-card::before {
+    position: absolute;
+    inset: auto -1.4rem -1.8rem auto;
+    width: 8rem;
+    height: 8rem;
+    clip-path: polygon(18% 0, 100% 30%, 62% 100%, 0 72%);
+    content: "";
+    background: rgba(242, 240, 235, 0.045);
+    transform: rotate(10deg);
+    transition: transform var(--motion-medium) var(--ease-standard);
+  }
+
+  .capability-card:hover {
+    border-color: var(--color-line-strong);
+    background-color: rgba(242, 240, 235, 0.026);
+    transform: translateY(-3px);
+  }
+
+  .capability-card:hover::before {
+    transform: translate(-0.5rem, -0.35rem) rotate(4deg);
+  }
+
+  span {
+    display: block;
+    color: var(--brand-accent-2);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  h3 {
+    max-width: 11rem;
+    margin: 4.6rem 0 0.9rem;
+    font-size: 1.26rem;
+    font-weight: 520;
+    line-height: 1.08;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    max-width: 19rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+</style>

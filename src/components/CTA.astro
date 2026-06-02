@@ -1,0 +1,77 @@
+---
+interface Props {
+  heading?: string;
+  email: string;
+  label?: string | null;
+}
+
+const { heading, email, label = "contact" } = Astro.props;
+const emailOnly = !heading && !label;
+const labeledEmailOnly = !heading && Boolean(label);
+---
+
+<section class:list={["cta", { "email-only": emailOnly, "labeled-email-only": labeledEmailOnly }]} id="contact" aria-labelledby={heading ? "contact-heading" : undefined}>
+  {label && <p>{label}</p>}
+  <div class="cta-body">
+    {heading && <h2 id="contact-heading">{heading}</h2>}
+    <a href={`mailto:${email}`}>{email}</a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: block;
+    width: min(var(--max-page), calc(100% - (var(--space-page) * 2)));
+    margin: 0 auto;
+    padding: clamp(4.5rem, 10vw, 8rem) 0;
+    border-block: 1px solid var(--color-line);
+  }
+
+  .labeled-email-only {
+    display: block;
+  }
+
+  p {
+    margin: 0 0 1.5rem;
+    color: var(--color-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    text-transform: lowercase;
+  }
+
+  h2 {
+    max-width: 11ch;
+    margin: 0;
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  a {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 2rem;
+    color: var(--brand-accent);
+    font-family: var(--font-mono);
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    border-bottom: 1px solid currentColor;
+    transition:
+      color var(--motion-fast) var(--ease-standard),
+      transform var(--motion-fast) var(--ease-standard);
+  }
+
+  a:hover {
+    color: var(--color-text);
+    transform: translateY(-1px);
+  }
+
+  .email-only a {
+    margin-top: 0;
+  }
+
+  .labeled-email-only a {
+    margin-top: 0;
+  }
+</style>

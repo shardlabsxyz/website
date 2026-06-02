@@ -1,0 +1,72 @@
+---
+import { shardLabsBrand } from "../brand/shard-labs";
+import BackgroundGrid from "../components/BackgroundGrid.astro";
+import CapabilityCard from "../components/CapabilityCard.astro";
+import CTA from "../components/CTA.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import ShardMotif from "../components/ShardMotif.astro";
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+
+const nav = [
+  { href: "#focus", label: "focus" },
+];
+
+const logoPath = `${import.meta.env.BASE_URL}${shardLabsBrand.logoPath.replace(/^\//, "")}`;
+
+const capabilities = [
+  {
+    title: "Kubernetes",
+    description: "Open-source Kubernetes modules and infrastructure patterns for teams building reliable, composable platforms.",
+    href: "https://github.com/shardlabsxyz",
+  },
+  {
+    title: "Unforeseen consequences",
+    description: "Independent blockchain OSS research and engineering. We build things, break things, and publish what we learn.",
+    href: "https://github.com/unforeseen-consequences",
+  },
+];
+
+---
+
+<Layout
+  title="shard labs | programmable infrastructure"
+  description="shard labs builds focused experiments at the edge of blockchain, AI, automation, and infrastructure."
+  themeClass={shardLabsBrand.themeClass}
+>
+  <div class="main-shell">
+    <BackgroundGrid />
+    <ShardMotif variant="kinetic" />
+    <Header logoPath={logoPath} brandName={shardLabsBrand.name} nav={nav} contactHref="#contact" />
+    <main>
+      <Hero
+        eyebrow={shardLabsBrand.parentLine}
+        headline="Programmable infrastructure"
+        copy="shard labs builds focused experiments at the edge of blockchain, AI, automation, and infrastructure."
+        primaryLabel="Contact the lab"
+        primaryHref={`mailto:${shardLabsBrand.contactEmail}`}
+        secondaryLabel="Explore focus areas"
+        secondaryHref="#focus"
+      />
+      <Section id="focus" label="focus areas" heading="Focus">
+        <div class="capability-grid">
+          {capabilities.map((capability, index) => <CapabilityCard {...capability} index={index} />)}
+        </div>
+      </Section>
+      <CTA email={shardLabsBrand.contactEmail} />
+    </main>
+    <Footer
+      logoPath={logoPath}
+      brandName={shardLabsBrand.name}
+      parentLine={shardLabsBrand.parentLine}
+      links={[
+        { href: "https://fragment.sh", label: "fragment" },
+        { href: "#focus", label: "focus" },
+        { href: "#contact", label: "contact" },
+      ]}
+    />
+  </div>
+</Layout>

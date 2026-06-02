@@ -1,0 +1,99 @@
+---
+interface FooterLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  logoPath?: string | null;
+  brandName: string;
+  parentLine?: string;
+  links: FooterLink[];
+}
+
+const { logoPath, brandName, parentLine, links } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-brand" href="#top" aria-label={`${brandName} home`}>
+      {logoPath ? <img src={logoPath} alt="" width="132" height="28" /> : <span>{brandName}</span>}
+    </a>
+    {parentLine && <p>{parentLine}</p>}
+  </div>
+  <small>&copy; {year} {brandName} all rights reserved.</small>
+  <nav aria-label="Footer navigation">
+    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: end;
+    width: min(var(--max-page), calc(100% - (var(--space-page) * 2)));
+    margin: 0 auto;
+    padding: 2rem 0;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.85rem;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+  }
+
+  img {
+    display: block;
+    width: auto;
+    max-width: 9.4rem;
+    height: 1.8rem;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+  }
+
+  p {
+    margin: 0.55rem 0 0;
+    color: var(--brand-accent-2);
+  }
+
+  small {
+    justify-self: center;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: end;
+  }
+
+  a {
+    transition: color var(--motion-fast) var(--ease-standard);
+  }
+
+  nav a:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 780px) {
+    .site-footer {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    small,
+    nav {
+      justify-self: start;
+      justify-content: start;
+    }
+  }
+</style>

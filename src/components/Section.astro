@@ -1,0 +1,75 @@
+---
+interface Props {
+  id?: string;
+  label: string;
+  heading?: string;
+  compact?: boolean;
+}
+
+const { id, label, heading, compact = false } = Astro.props;
+---
+
+<section class:list={["section", { compact }]} id={id} aria-labelledby={heading ? `${id}-heading` : undefined}>
+  <div class="section-label">{label}</div>
+  <div class="section-body">
+    {heading && <h2 id={`${id}-heading`}>{heading}</h2>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.33fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    width: min(var(--max-page), calc(100% - (var(--space-page) * 2)));
+    margin: 0 auto;
+    padding: var(--space-section) 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .section.compact {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+
+  .section-label {
+    color: var(--color-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0;
+    text-transform: lowercase;
+  }
+
+  .section-body {
+    min-width: 0;
+  }
+
+  h2 {
+    max-width: 14ch;
+    margin: 0 0 2.2rem;
+    color: var(--color-text);
+    font-size: clamp(2rem, 5vw, 4.9rem);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  :global(.positioning-copy) {
+    max-width: 58rem;
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(1.65rem, 4vw, 3.35rem);
+    font-weight: 460;
+    line-height: 1.12;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 760px) {
+    .section {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+    }
+  }
+</style>

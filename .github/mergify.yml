@@ -1,0 +1,12 @@
+pull_request_rules:
+  - name: Automerge Renovate patch and minor updates
+    conditions:
+      - author=renovate[bot]
+      - label=renovate:auto-merge
+      - base=main
+      - -conflict
+      - check-success=pre-commit
+      - check-success=astro
+    actions:
+      merge:
+        method: squash

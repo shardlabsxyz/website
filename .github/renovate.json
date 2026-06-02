@@ -1,0 +1,58 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)"
+  ],
+  "enabledManagers": [
+    "bun",
+    "github-actions",
+    "mise",
+    "pre-commit"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "github actions"
+    },
+    {
+      "matchManagers": [
+        "bun"
+      ],
+      "groupName": "bun dependencies"
+    },
+    {
+      "matchManagers": [
+        "mise"
+      ],
+      "groupName": "mise tools"
+    },
+    {
+      "matchManagers": [
+        "pre-commit"
+      ],
+      "groupName": "pre-commit hooks"
+    },
+    {
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "addLabels": [
+        "renovate:auto-merge"
+      ]
+    }
+  ],
+  "pre-commit": {
+    "enabled": true
+  },
+  "rangeStrategy": "bump",
+  "timezone": "Europe/Paris"
+}
